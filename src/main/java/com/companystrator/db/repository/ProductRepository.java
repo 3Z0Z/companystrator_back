@@ -1,0 +1,14 @@
+package com.companystrator.db.repository;
+
+import com.companystrator.db.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+    List<Product> findByCompanyNit(String companyNit);
+
+}
