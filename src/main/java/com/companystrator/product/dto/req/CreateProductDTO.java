@@ -8,7 +8,7 @@ public record CreateProductDTO(
     @JsonProperty("code")
     @NotNull(message = "is mandatory")
     @Digits(integer = 10, fraction = 0, message = "Code must be exactly 10 digits")
-    int code,
+    Long code,
 
     @JsonProperty("name")
     @Pattern(message = "Product name must be 10 to 20 characters, allowed letters, numbers, spaces, and special characters(.-)", regexp = "^[a-zA-Z0-9 .-]{10,20}$")
@@ -36,11 +36,6 @@ public record CreateProductDTO(
     Long primaryCategory,
 
     @JsonProperty("secondary_category")
-    Long secondaryCategory,
-
-    @JsonProperty("NIT")
-    @NotBlank(message = "is mandatory")
-    @Pattern(message = "Invalid NIT format. It must contain only numbers and have 8 to 10 digits", regexp = "^[0-9]{8,10}$")
-    String nit
+    Long secondaryCategory
 
 ) { }

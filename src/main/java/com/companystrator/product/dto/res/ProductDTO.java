@@ -7,7 +7,7 @@ import lombok.Builder;
 public record ProductDTO(
 
     @JsonProperty("code")
-    int code,
+    Long code,
 
     @JsonProperty("name")
     String name,
@@ -25,9 +25,9 @@ public record ProductDTO(
     double priceMxn,
 
     @JsonProperty("primary_category")
-    String primaryCategory,
+    Long primaryCategory,
 
     @JsonProperty("secondary_category")
-    String secondaryCategory
+    Long secondaryCategory
 
 ) { }

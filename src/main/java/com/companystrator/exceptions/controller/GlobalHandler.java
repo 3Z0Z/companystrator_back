@@ -40,8 +40,13 @@ public class GlobalHandler {
     }
 
     @ExceptionHandler(CompanyNotFoundException.class)
-    public ResponseEntity<ResponseException> handleCompanyNotFoundException(CompanyNotFoundException e) {
+    public ResponseEntity<ResponseException> handleCompanyNameAlreadyExist(CompanyNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponseException(e.getMessage()));
+    }
+
+    @ExceptionHandler(CompanyNameAlreadyExist.class)
+    public ResponseEntity<ResponseException> handleCompanyNotFoundException(CompanyNameAlreadyExist e) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ResponseException(e.getMessage()));
     }
 
     @ExceptionHandler(CreateProductException.class)

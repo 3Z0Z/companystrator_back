@@ -55,6 +55,7 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItemDTO> orderItems = this.orderItemRepository.findByOrderId(order.getId())
             .stream().map(orderItem -> OrderItemDTO.builder()
                 .productCode(orderItem.getProduct().getCode())
+                .name(orderItem.getProduct().getName())
                 .quantity(orderItem.getQuantity())
                 .amount(orderItem.getAmount())
                 .build()).toList();

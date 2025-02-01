@@ -16,7 +16,7 @@ public class Product {
 
     @Id
     @Column(name = "code")
-    private int code;
+    private Long code;
 
     @Column(name = "name")
     private String name;

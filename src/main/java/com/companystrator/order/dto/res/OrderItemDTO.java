@@ -7,7 +7,10 @@ import lombok.Builder;
 public record OrderItemDTO(
 
     @JsonProperty("product_code")
-    int productCode,
+    Long productCode,
+
+    @JsonProperty("name")
+    String name,
 
     @JsonProperty("quantity")
     int quantity,

@@ -1,6 +1,5 @@
 package com.companystrator.user.dto.req;
 
-import com.companystrator.db.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

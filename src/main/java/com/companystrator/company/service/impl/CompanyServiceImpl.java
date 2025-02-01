@@ -6,6 +6,7 @@ import com.companystrator.company.dto.res.CompanyDTO;
 import com.companystrator.company.service.CompanyService;
 import com.companystrator.db.model.Company;
 import com.companystrator.db.repository.CompanyRepository;
+import com.companystrator.exceptions.exception.CompanyNameAlreadyExist;
 import com.companystrator.exceptions.exception.CompanyNotFoundException;
 import com.companystrator.exceptions.exception.CreateCompanyException;
 import lombok.RequiredArgsConstructor;
@@ -54,6 +55,12 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public void updateCompany(String nit, UpdateCompanyDTO request) {
+         this.companyRepository.findByNitOrName(request.name(), request.name())
+            .ifPresent(company -> {
+                if (!company.getNit().equals(nit)) {
+                    throw new CompanyNameAlreadyExist("The name is already taken");
+                }
+            });
         Company company = this.getCompanyById(nit);
         company.setName(request.name());
         company.setAddress(request.address());

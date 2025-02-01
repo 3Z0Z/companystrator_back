@@ -42,7 +42,8 @@ public class WebSecurityConfig {
 					"/api/v1/product/get-product-by-code/**",
 					"/api/v1/product/get-products-by-nit/**",
 					"/swagger-ui/**",
-					"/v3/api-docs/**"
+					"/v3/api-docs/**",
+					"/actuator/**"
 				).permitAll()
 				.requestMatchers(
 					"/api/v1/company/create-company",

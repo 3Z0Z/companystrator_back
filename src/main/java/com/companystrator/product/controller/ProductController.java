@@ -22,9 +22,9 @@ public class ProductController {
 
     private final ProductService productService;
 
-    @PostMapping("/create-product")
-    public ResponseEntity<SuccessResponseDTO> createProduct(@RequestBody @Valid CreateProductDTO request) {
-        this.productService.createProduct(request);
+    @PostMapping("/create-product/{nit}")
+    public ResponseEntity<SuccessResponseDTO> createProduct(@PathVariable("nit") String nit, @RequestBody @Valid CreateProductDTO request) {
+        this.productService.createProduct(nit, request);
         return ResponseEntity.status(HttpStatus.CREATED).body(new SuccessResponseDTO("Product " + request.name() + " created successfully"));
     }
 
@@ -41,7 +41,7 @@ public class ProductController {
     }
 
     @GetMapping("/get-product-by-code/{code}")
-    public ResponseEntity<ProductDTO> getProductByCode(@PathVariable("code") int code) {
+    public ResponseEntity<ProductDTO> getProductByCode(@PathVariable("code") Long code) {
         ProductDTO response = this.productService.getProductByCode(code);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
@@ -53,13 +53,13 @@ public class ProductController {
     }
 
     @PutMapping("/update-product/{code}")
-    public ResponseEntity<SuccessResponseDTO> updateProductByCode(@PathVariable("code") int code, @RequestBody @Valid UpdateProductDTO request) {
+    public ResponseEntity<SuccessResponseDTO> updateProductByCode(@PathVariable("code") Long code, @RequestBody @Valid UpdateProductDTO request) {
         this.productService.updateProductByCode(code, request);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponseDTO("Product " + code + " updated successfully"));
     }
 
     @DeleteMapping("/delete-product/{code}")
-    public ResponseEntity<SuccessResponseDTO> deleteProductByCode(@PathVariable("code") int code) {
+    public ResponseEntity<SuccessResponseDTO> deleteProductByCode(@PathVariable("code") Long code) {
         this.productService.deleteProduct(code);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessResponseDTO("Product " + code + " deleted successfully"));
     }

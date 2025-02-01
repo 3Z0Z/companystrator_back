@@ -14,14 +14,14 @@ public interface ProductService {
 
     List<ProductCategoryDTO> getProductCategoryList();
 
-    void createProduct(CreateProductDTO request);
+    void createProduct(String nit, CreateProductDTO request);
 
-    ProductDTO getProductByCode(int code);
+    ProductDTO getProductByCode(Long code);
 
     List<ProductDTO> getProductsCompanysList(String nit);
 
-    void updateProductByCode(int code, UpdateProductDTO request);
+    void updateProductByCode(Long code, UpdateProductDTO request);
 
-    void deleteProduct(int code);
+    void deleteProduct(Long code);
 
 }

@@ -54,14 +54,14 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void createProduct(CreateProductDTO request) {
+    public void createProduct(String nit, CreateProductDTO request) {
         Optional<Product> verifyProductExist = this.productRepository.findById(request.code());
         if (verifyProductExist.isPresent()) {
             log.error("Product code {} or name {} already exist", request.code(), request.name());
-            throw new CreateProductException("Product code " + request.code() + " or name " + request.name() + " already exist");
+            throw new CreateProductException("Product code " + request.code() + " already exist");
         }
-        Company company = this.companyRepository.findById(request.nit())
-            .orElseThrow(() -> new CompanyNotFoundException("Company not found with NIT " + request.nit()));
+        Company company = this.companyRepository.findById(nit)
+            .orElseThrow(() -> new CompanyNotFoundException("Company not found with NIT " + nit));
         ProductCategory primaryCategory = this.findProductCategoryById(request.primaryCategory());
         ProductCategory secondaryCategory = request.secondaryCategory() != null
             ? this.findProductCategoryById(request.secondaryCategory())
@@ -82,7 +82,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO getProductByCode(int code) {
+    public ProductDTO getProductByCode(Long code) {
         Product product = this.findProductByCode(code);
         return this.toProductDTO(product);
     }
@@ -95,7 +95,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void updateProductByCode(int code, UpdateProductDTO request) {
+    public void updateProductByCode(Long code, UpdateProductDTO request) {
         Product product = this.findProductByCode(code);
         product.setName(request.name());
         product.setDescription(request.description());
@@ -115,13 +115,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(int code) {
+    public void deleteProduct(Long code) {
         Product product = this.findProductByCode(code);
         this.productRepository.delete(product);
         log.info("Product {} deleted", code);
     }
 
-    private Product findProductByCode(int code) {
+    private Product findProductByCode(Long code) {
         return this.productRepository.findById(code)
             .orElseThrow(() -> new ProductNotFoundException("Product not found with code " + code));
     }
@@ -139,8 +139,8 @@ public class ProductServiceImpl implements ProductService {
             .priceCop(product.getPriceCop())
             .priceUsd(product.getPriceUsd())
             .priceMxn(product.getPriceMxn())
-            .primaryCategory(product.getPrimaryCategory().getCategory())
-            .secondaryCategory(product.getSecondaryCategory() != null ? product.getSecondaryCategory().getCategory() : null)
+            .primaryCategory(product.getPrimaryCategory().getId())
+            .secondaryCategory(product.getSecondaryCategory() != null ? product.getSecondaryCategory().getId() : null)
             .build();
     }
 
