@@ -83,6 +83,22 @@ public class OrderServiceImpl implements OrderService {
             .build()).toList();
     }
 
+    @Override
+    public List<OrderDTO> getUserOrders(String username) {
+        User user = this.userRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        List<Client> clientList = this.clientRepository.findByUserId(user.getId());
+        List<Long> clientIds = clientList.stream().map(Client::getId).toList();
+        List<Order> orderList = this.orderRepository.findByClientIds(clientIds);
+        return orderList.stream().map(order -> OrderDTO.builder()
+            .orderId(order.getId())
+            .clientId(order.getClient().getId())
+            .totalAmount(order.getTotalAmount())
+            .currency(order.getCurrency())
+            .placetAt(order.getPlacedAt())
+            .build()).toList();
+    }
+
     private Client createClient(User user, String nit) {
         Company company = this.companyRepository.findById(nit)
             .orElseThrow(() -> new CompanyNotFoundException("Company not found with NIT " + nit));

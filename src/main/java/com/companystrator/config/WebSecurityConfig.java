@@ -53,13 +53,14 @@ public class WebSecurityConfig {
 					"/api/v1/product/create-product",
 					"/api/v1/product/update-product/**",
 					"/api/v1/product/delete-product/**",
-					"/api/v1/order/get-order-by-id/**",
 					"/api/v1/order/get-orders-by-nit/**"
 				).hasAuthority(UserRoles.ADMIN.toString())
 				.requestMatchers(
 					"/api/v1/order/place-order",
-					"/api/v1/order/get-order-by-id/**"
+					"/api/v1/order/get-user-orders"
 				).hasAuthority(UserRoles.CLIENT.toString())
+				.requestMatchers("/api/v1/order/get-order-by-id/**")
+					.hasAnyAuthority(UserRoles.ADMIN.toString(), UserRoles.CLIENT.toString())
 				.anyRequest().authenticated()
 			)
 			.sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

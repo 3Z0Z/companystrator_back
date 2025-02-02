@@ -42,4 +42,11 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
+    @GetMapping("/get-user-orders")
+    public ResponseEntity<List<OrderDTO>> getUserOrders(HttpServletRequest request) {
+        String username = this.jwtService.extractUsernameFromRequest(request);
+        List<OrderDTO> userOrders = this.orderService.getUserOrders(username);
+        return ResponseEntity.status(HttpStatus.OK).body(userOrders);
+    }
+
 }

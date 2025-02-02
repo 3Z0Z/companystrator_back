@@ -14,4 +14,6 @@ public interface ClientRepository extends JpaRepository<Client, Long> {
 
     List<Client> findByCompanyNit(String nit);
 
+    List<Client> findByUserId(Long id);
+
 }

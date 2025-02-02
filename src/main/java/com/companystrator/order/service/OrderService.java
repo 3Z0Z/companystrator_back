@@ -14,4 +14,6 @@ public interface OrderService {
 
     List<OrderDTO> getOrdersByNit(String nit);
 
+    List<OrderDTO> getUserOrders(String username);
+
 }
